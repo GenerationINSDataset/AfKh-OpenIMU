@@ -1,0 +1,18 @@
+version: '3'
+services:
+
+  spring-boot-app:
+      build:
+        context: ./openimu-b
+        dockerfile: Dockerfile
+      image: openimu-b
+      ports:
+        - "8080:8080"
+
+  react-app:
+      build:
+        context: ./openimu-f
+        dockerfile: Dockerfile
+      image: openimu-f
+      ports:
+        - "3000:80"

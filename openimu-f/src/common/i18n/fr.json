@@ -1,0 +1,13 @@
+{
+  "form": {
+    "trajectory": "Reference Trajectory : ",
+    "grade": "IMU Grade :",
+    "time": "Time :",
+    "variant": "Variant number :",
+    "generate": "Generate",
+    "biais": "Biais",
+    "nose": "Nose",
+    "scale": "Scale Factor",
+    "download": "Download"
+  }
+}

@@ -1,0 +1,111 @@
+form {
+  margin: 20px auto;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 800px;
+  font-size: 14px;
+  font-family: "Century Gothic";
+}
+
+
+
+.row {
+  display: flex;
+  gap: 20px;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.field label {
+  width: 100px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.field input[type="text"],
+.field input[type="email"],
+.field input[type="file"] {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  padding: 10px;
+  background: #d82401;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button[type=submit] {
+  padding: 10px;
+  background: #111184;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button[type=submit]:hover {
+  background: #0056b3;
+}
+
+.submit {
+  justify-content: center;
+}
+
+.select__value-container {
+  width: 280px;
+}
+
+.grade input {
+  width: 125px
+}
+
+.css-b62m3t-container {
+  width: 280px;
+}
+
+.tableContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.btn-icon {
+  fill: white;
+  width: 15px;
+  height: 15px;
+  padding-right: 10px;
+}
+
+.error {
+  border: 1px solid red !important;
+}
+
+.errorMsg {
+  width: 100%;
+  margin-top: .25rem;
+  font-size: .875em;
+  color: #dc3545;
+  text-align: left;
+}
+
+.inputContainer{
+  display: flex;
+  flex-direction: column;
+}

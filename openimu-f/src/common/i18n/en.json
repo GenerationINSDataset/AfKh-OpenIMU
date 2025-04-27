@@ -1,0 +1,8 @@
+{
+  "form": {
+    "trajectory": "Reference Trajectory : ",
+    "grade": "IMU Grade :",
+    "time": "Time :",
+    "variant": "Variant number :"
+  }
+}
