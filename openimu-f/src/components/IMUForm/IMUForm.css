@@ -27,13 +27,11 @@ form {
 
 .field label {
   width: 100px;
-  font-weight: bold;
   margin-right: 10px;
 }
 
 .field input[type="text"],
-.field input[type="email"],
-.field input[type="file"] {
+.field input[type="email"]{
   flex: 1;
   padding: 8px;
   border: 1px solid #ccc;
@@ -47,7 +45,7 @@ button {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 button[type=submit] {
@@ -57,7 +55,7 @@ button[type=submit] {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 button[type=submit]:hover {
@@ -108,4 +106,49 @@ button[type=submit]:hover {
 .inputContainer{
   display: flex;
   flex-direction: column;
+}
+
+input[type=file] {
+  color: #222245;
+  padding: 4px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+input[type=file]::file-selector-button {
+  margin-right: 8px;
+  border: none;
+  border-radius: 2px;
+  background: #0056b3;
+  padding: 8px 12px;
+  color: #fff;
+  cursor: pointer;
+}
+
+input[type=file]::file-selector-button:hover {
+  background: #4747b8;
+}
+.grade-title{
+  display: flex;
+  align-items: center;
+  width: 200px;
+}
+
+.page-header {
+  padding: 20px;
+  background-color: #f9f9f9;
+  text-align: center; 
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.page-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #111184;
+  font-weight: 600;
+  font-family: 'Segoe UI', sans-serif;
 }

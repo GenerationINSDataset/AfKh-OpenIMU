@@ -9,22 +9,70 @@ import TrajectoryTable from "../TrajectoryTable";
 import { ReactComponent as LoadIcon } from "../../icons/rotate-solid.svg";
 import { ReactComponent as DownLoadIcon } from "../../icons/download-solid.svg";
 import { yupResolver } from "@hookform/resolvers/yup";
+import Input from "../Input";
 import * as yup from "yup";
 const IMUForm = () => {
-  const schema = yup
-    .object({
-      attachement: yup
-        .mixed()
-        .required("Le fichier est requis")
-        .test(
-          "is-txt",
-          "The file must be a .txt",
-          (file) => file[0] && file[0].name && file[0].name.endsWith(".txt")
-        ),
-      time: yup.string().required("required fields"),
-      variant: yup.string().required("required fields"),
-    })
-    .required();
+  const schema = yup.object({
+    attachement: yup
+      .mixed()
+      .required("required file")
+      .test(
+        "is-txt",
+        "The file must be a .txt",
+        (file) => file[0] && file[0].name && file[0].name.endsWith(".txt")
+      ),
+    grade: yup.object().required("required field"),
+    time: yup.string().required("required field"),
+    variant: yup
+      .number()
+      .transform((val, orig) => (orig === "" ? undefined : val))
+      .typeError("Must be a number")
+      .required("required field"),
+    accelerometer: yup.object().when("grade.id", {
+      is: 4,
+      then: (schema) =>
+        schema.shape({
+          bias: yup
+            .number()
+            .transform((val, orig) => (orig === "" ? undefined : val))
+            .typeError("Must be a number")
+            .required("required field"),
+          noise: yup
+            .number()
+            .transform((val, orig) => (orig === "" ? undefined : val))
+            .typeError("Must be a number")
+            .required("required field"),
+          scale: yup
+            .number()
+            .transform((val, orig) => (orig === "" ? undefined : val))
+            .typeError("Must be a number")
+            .required("required field"),
+        }),
+      otherwise: (schema) => schema.notRequired(),
+    }),
+    gyroscope: yup.object().when("grade.id", {
+      is: 4,
+      then: (schema) =>
+        schema.shape({
+          bias: yup
+            .number()
+            .transform((val, orig) => (orig === "" ? undefined : val))
+            .typeError("Must be a number")
+            .required("required field"),
+          noise: yup
+            .number()
+            .transform((val, orig) => (orig === "" ? undefined : val))
+            .typeError("Must be a number")
+            .required("required field"),
+          scale: yup
+            .number()
+            .transform((val, orig) => (orig === "" ? undefined : val))
+            .typeError("Must be a number")
+            .required("required field"),
+        }),
+      otherwise: (schema) => schema.notRequired(),
+    }),
+  });
 
   const {
     register,
@@ -40,14 +88,24 @@ const IMUForm = () => {
   const onSubmit = (data) => {
     const formData = new FormData();
     formData.append("attachement", data.attachement[0]);
+    const grade =
+      data.grade.id === 4
+        ? { accelerometre: data.accelerometre, gyroscope: data.gyroscope }
+        : data.grade;
+    formData.append(
+      "data",
+      new Blob(
+        [
+          JSON.stringify({
+            grade,
+            time: data.time,
+            variant: data.variant,
+          }),
+        ],
+        { type: "application/json" }
+      )
+    );
 
-    const { biais, nose, scale } =
-      data.grade.id !== 2 ? { ...data.grade } : { data };
-    formData.append("biais", biais);
-    formData.append("nose", nose);
-    formData.append("scale", scale);
-    formData.append("time", data.time);
-    formData.append("variant", data.variant);
     axios
       .post("/api/imu/generate", formData, {
         headers: {
@@ -58,9 +116,14 @@ const IMUForm = () => {
         setTrajectories(reponse.data);
       });
   };
-
+  console.log(errors);
   return (
     <>
+      <div class="page-header">
+        <h2>
+          <FormattedMessage id="title" />
+        </h2>
+      </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="row">
           <div className="field">
@@ -103,47 +166,65 @@ const IMUForm = () => {
             </div>
           </div>
         </div>
-        {grade && grade.id === 2 && (
-          <div className="row grade">
-            <div className="field">
-              <label for="biais">
-                <FormattedMessage id="form.biais" />
-              </label>
-              <div className="inputContainer">
-                <input
-                  className={errors.biais ? "error" : ""}
-                  type="text"
-                  id="biais"
-                  {...register("biais")}
-                />
-                {errors.biais && (
-                  <div className="errorMsg">{errors.biais.message}</div>
-                )}
+        {grade && grade.id === 4 && (
+          <>
+            <div className="row grade">
+              <div className="grade-title">
+                <FormattedMessage id="form.accelerometer" />
               </div>
+              <Input
+                error={errors.accelerometer?.bias}
+                name="accelerometer.bias"
+                label="form.bias"
+                unit="mg"
+                register={register}
+              />
+
+              <Input
+                error={errors.accelerometer?.noise}
+                name="accelerometer.noise"
+                label="form.noise"
+                unit="°/h"
+                register={register}
+              />
+
+              <Input
+                error={errors.accelerometer?.scale}
+                name="accelerometer.scale"
+                label="form.scale"
+                unit="%"
+                register={register}
+              />
             </div>
-            <div className="field">
-              <label for="nose">
-                <FormattedMessage id="form.nose" />
-              </label>
-              <div className="inputContainer">
-                <input type="text" id="nose" {...register("nose")} />
-                {errors.nose && (
-                  <div className="errorMsg">{errors.nose.message}</div>
-                )}
+            <div className="row grade">
+              <div className="grade-title">
+                <FormattedMessage id="form.gyroscope" />
               </div>
+              <Input
+                error={errors.gyroscope?.bias}
+                name="gyroscope.bias"
+                label="form.bias"
+                unit="°/h"
+                register={register}
+              />
+
+              <Input
+                error={errors.gyroscope?.noise}
+                name="gyroscope.noise"
+                label="form.noise"
+                unit="%"
+                register={register}
+              />
+
+              <Input
+                error={errors.gyroscope?.scale}
+                name="gyroscope.scale"
+                label="form.scale"
+                unit="°/√Hz"
+                register={register}
+              />
             </div>
-            <div className="field">
-              <label for="scale">
-                <FormattedMessage id="form.scale" />
-              </label>
-              <div className="inputContainer">
-                <input type="text" id="scale" {...register("scale")} />
-                {errors.scale && (
-                  <div className="errorMsg">{errors.scale.scale}</div>
-                )}
-              </div>
-            </div>
-          </div>
+          </>
         )}
         <div className="row">
           <div className="field">

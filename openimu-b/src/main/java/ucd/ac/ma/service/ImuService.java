@@ -43,9 +43,9 @@ public class ImuService {
         return listPoint;
     }
 
-    public List<TrajectoryResponseDTO> generateTrajectory(UploadRequestDTO uploadRequestDTO){
-       List<TrajectoryResponseDTO> listTrajectory = new ArrayList<>();
-       List<TrajectoryDTO> trajectoryDTOList = processFile(uploadRequestDTO.getAttachement());
+    public List<TrajectoryResponseDTO> generateTrajectory(MultipartFile attachement, UploadRequestDTO uploadRequestDTO) {
+        List<TrajectoryResponseDTO> listTrajectory = new ArrayList<>();
+        List<TrajectoryDTO> trajectoryDTOList = processFile(attachement);
         trajectoryDTOList.forEach(trajectoryDTO -> {
             TrajectoryResponseDTO trajectoryResponseDTO = new TrajectoryResponseDTO();
             trajectoryResponseDTO.setX(trajectoryDTO.getX());
@@ -53,15 +53,15 @@ public class ImuService {
             trajectoryResponseDTO.setZ(trajectoryDTO.getZ());
             listTrajectory.add(trajectoryResponseDTO);
         });
+
         if (!listTrajectory.isEmpty()) {
             TrajectoryResponseDTO first = listTrajectory.get(0);
+            first.setGrade(uploadRequestDTO.getGrade());
             first.setTime(uploadRequestDTO.getTime());
-            first.setNose(uploadRequestDTO.getNose());
-            first.setScale(uploadRequestDTO.getScale());
-            first.setBiais(uploadRequestDTO.getBiais());
             first.setVariant(uploadRequestDTO.getVariant());
 
         }
+
         return listTrajectory;
     }
 }

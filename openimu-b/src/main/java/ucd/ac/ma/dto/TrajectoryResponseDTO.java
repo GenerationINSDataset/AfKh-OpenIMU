@@ -7,9 +7,7 @@ public class TrajectoryResponseDTO {
     String x;
     String y;
     String z;
-    private String biais;
-    private String nose;
-    private String scale;
+    private GradeDTO grade;
     private String time;
     private String variant;
 }

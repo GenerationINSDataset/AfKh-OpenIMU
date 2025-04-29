@@ -1,13 +1,28 @@
 {
+  "title": "AfKh-OpenIMU Generator : Inertial Navigation System Dataset Generation",
   "form": {
     "trajectory": "Reference Trajectory : ",
     "grade": "IMU Grade :",
     "time": "Time :",
     "variant": "Variant number :",
     "generate": "Generate",
-    "biais": "Biais",
-    "nose": "Nose",
+    "bias": "Bias",
+    "noise": "Noise",
     "scale": "Scale Factor",
-    "download": "Download"
+    "download": "Download",
+    "accelerometer": "Accelerometer",
+    "gyroscope": "Gyroscope"
+  },
+  "table": {
+    "x": "X",
+    "y": "Y",
+    "z": "Z",
+    "bias": "Bias",
+    "noise": "Noise",
+    "scale": "Scale Factor",
+    "time": "Time",
+    "variant": "Variant number",
+    "accelerometer": "Accelerometer",
+    "gyroscope": "Gyroscope"
   }
 }
